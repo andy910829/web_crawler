@@ -6,17 +6,17 @@ from bs4 import BeautifulSoup
 import bs4
 
 def search(name, driver):
-    time.sleep(3)
+    time.sleep(1)
     button = driver.find_element_by_id("stkNo")
     button.click()
-    time.sleep(3)
+    time.sleep(1)
     element = driver.find_element_by_id("stkNo")
     element.send_keys(Keys.CONTROL,'A')
     element.send_keys(name)
-    time.sleep(2)
+    time.sleep(1)
     button = driver.find_element_by_id("btn-search")
     button.click()
-    time.sleep(5)
+    time.sleep(1)
     
     
     
@@ -32,10 +32,11 @@ def writedown(html, file, ulist):
     soap = BeautifulSoup(html, "html.parser")
     content = soap.tbody.tr('td')
     title = ["本日漲停:", "開盤競價基準:", "本日跌停:"]
+    company = str(soap.find(id = "csvTitle2")).strip('<a id="csvTitle2"><h2>').strip('</h2>')
     for num in content:       
         ulist.append(str(num).strip('<td>').strip('</td>'))      
 
-    file.write(title[0]  + ulist[0] + title[1] + ulist[1] + title[2] + ulist[2] + '\n')
+    file.write(company + title[0]  + ulist[0] + title[1] + ulist[1] + title[2] + ulist[2] + '\n')
 
 def main():
     i = 0
