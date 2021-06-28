@@ -29,14 +29,18 @@ def gethtml(url, name):
 
       
 def writedown(html, file, ulist):
-    soap = BeautifulSoup(html, "html.parser")
-    content = soap.tbody.tr('td')
-    title = ["本日漲停:", "開盤競價基準:", "本日跌停:"]
-    company = str(soap.find(id = "csvTitle2")).strip('<a id="csvTitle2"><h2>').strip('</h2>')
-    for num in content:       
-        ulist.append(str(num).strip('<td>').strip('</td>'))      
 
-    file.write(company + title[0]  + ulist[0] + title[1] + ulist[1] + title[2] + ulist[2] + '\n')
+    try:
+        soap = BeautifulSoup(html, "html.parser")
+        content = soap.tbody.tr('td')
+        title = ["本日漲停:", "開盤競價基準:", "本日跌停:"]
+        company = str(soap.find(id = "csvTitle2")).strip('<a id="csvTitle2"><h2>').strip('</h2>')
+        for num in content:       
+            ulist.append(str(num).strip('<td>').strip('</td>'))      
+
+        file.write(company + title[0]  + ulist[0] + title[1] + ulist[1] + title[2] + ulist[2] + '\n')
+    except:
+        print("出現未知錯誤")
 
 def main():
     i = 0
