@@ -2,9 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-    
-    
-    
 def gethtml(url, name):
     headers = {
         'user-agent' : 'Mozilla/5.0'
