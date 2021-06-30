@@ -1,7 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
+    
+    
+    
 def gethtml(url, name):
     headers = {
         'user-agent' : 'Mozilla/5.0'
@@ -53,5 +57,6 @@ def main():
 
     f.close()
     print("下載成功")
+    time.sleep(2)
 main()    
 
