@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import time
+import os
 
 
     
@@ -57,6 +57,6 @@ def main():
 
     f.close()
     print("下載成功")
-    time.sleep(2)
+    os.system('pause')
 main()    
 
