@@ -18,11 +18,11 @@ def search(keyword):
         print('檢查網路問題!')
  
 
-def gethtml(html, list, list2):
+def gethtml(list, list2, name, price):
     try:
-        soap = BeautifulSoup(html, 'html.parser')
-        price = soap.find_all('p', class_ = 'prdPrice')
-        name  = soap.find_all(class_ = 'prdName')
+        # soap = BeautifulSoup(html, 'html.parser')
+        # price = soap.select('p.prdPrice')
+        # name  = soap.find_all(class_ = 'prdName')
         for x in name:    
             list.append(x)
         for i in price:
@@ -30,7 +30,7 @@ def gethtml(html, list, list2):
     except:
         print('出現錯誤')
 
-def writeinfo(list, list2, f):
+def writeinfo(list, list2, soap, name, price, f):
     priz = []
     for num in range(len(list)):
         f.write('商品名稱:')
@@ -40,10 +40,16 @@ def writeinfo(list, list2, f):
         priz.append('')
         a = list2[num].find('$')
         b = list2[num].find('</b>')
-        for i in range(a, b):
+        for i in range(a, b):            
             priz[num] += list2[num][i]
-        f.write(priz[num])
-        f.write('\n')
+        if (priz[num] == ''):
+            price = soap.find_all('p', class_ = 'prdPrice')
+            priz[num] = str(price[num].text)
+            f.write(priz[num])
+            f.write('\n')
+        else:
+            f.write(priz[num])
+            f.write('\n')
                 
 
 def main():
@@ -52,8 +58,11 @@ def main():
     f = open('momo.txt', 'w', encoding = 'utf-8')
     kw = input('請輸入商品名稱:')
     search(kw)
-    gethtml(search(kw), N_list, P_list)
-    writeinfo(N_list, P_list, f)
+    soap = BeautifulSoup(search(kw), 'html.parser')
+    price = soap.select('p.prdPrice')
+    name  = soap.find_all(class_ = 'prdName')
+    gethtml(N_list, P_list, name, price)
+    writeinfo(N_list, P_list, soap, name, price, f)
     f.close()
     print('下載完成')
     os.system('pause')
