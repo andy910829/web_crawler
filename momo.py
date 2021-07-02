@@ -20,9 +20,6 @@ def search(keyword):
 
 def gethtml(list, list2, name, price):
     try:
-        # soap = BeautifulSoup(html, 'html.parser')
-        # price = soap.select('p.prdPrice')
-        # name  = soap.find_all(class_ = 'prdName')
         for x in name:    
             list.append(x)
         for i in price:
